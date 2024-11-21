@@ -28,26 +28,25 @@ services:
       - redis
     env_file: .env
 
-# Comment out Celery services
-# celery_worker:
-#   build: .
-#   command: bash -c "sleep 10 && celery -A sports_booking worker --loglevel=info"
-#   volumes:
-#     - .:/app
-#   depends_on:
-#     - web
-#     - redis
-#   env_file: .env
-
-# celery_beat:
-#   build: .
-#   command: bash -c "sleep 10 && celery -A sports_booking beat --loglevel=info"
-#   volumes:
-#     - .:/app
-#   depends_on:
-#     - web
-#     - redis
-#   env_file: .env
+  celery_worker:
+    build: .
+    command: bash -c "sleep 10 && celery -A sports_booking worker --loglevel=info"
+    volumes:
+      - .:/app
+    depends_on:
+      - web
+      - redis
+    env_file: .env
+  
+  celery_beat:
+    build: .
+    command: bash -c "sleep 10 && celery -A sports_booking beat --loglevel=info"
+    volumes:
+      - .:/app
+    depends_on:
+      - web
+      - redis
+    env_file: .env
 
 volumes:
   postgres_data:
